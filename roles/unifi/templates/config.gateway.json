@@ -1,0 +1,20 @@
+{
+	"interfaces": {
+		"ethernet": {
+			"eth0": {
+				"vif": {
+					"6": {
+						"pppoe": {
+							"2": {
+								"dhcpv6-pd": {
+									"rapid-commit": "disable",
+									"prefix-only": "''"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
