@@ -1,0 +1,8 @@
+- name: configure and deploy unifi 
+  hosts: unifi
+  remote_user: pi
+
+  roles:
+    - common
+    - telegraf
+    - unifi
