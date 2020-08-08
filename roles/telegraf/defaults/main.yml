@@ -1,0 +1,12 @@
+telegraf_packages:
+  - telegraf
+telegraf_packages_state: present
+telegraf_repo_name: influxdb
+telegraf_repo_url: deb https://repos.influxdata.com/debian buster stable
+telegraf_repo_state: present
+telegraf_repo_key_server: https://repos.influxdata.com/influxdb.key
+telegraf_repo_key_id: 05CE15085FC09D18E99EFB22684A14CF2582E0C5
+telegraf_services:
+  - telegraf
+telegraf_services_state: started
+telegraf_services_enabled: yes

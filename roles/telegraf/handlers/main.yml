@@ -1,0 +1,8 @@
+---
+  - name: restart telegraf
+    service:
+      name: "{{ item }}"
+      state: restarted
+    become: yes
+    with_items: "{{ telegraf_services }}"
+  

@@ -1,0 +1,33 @@
+---
+  - name: install telegraf apt key
+    apt_key:
+      keyserver: "{{ telegraf_repo_key_server }}"
+      id: "{{ telegraf_repo_key_id }}"
+    become: yes
+  
+  - name: install telegraf apt repository
+    apt_repository:
+      filename: "{{ telegraf_repo_name }}"
+      repo: "{{ telegraf_repo_url }}"
+      state: "{{ telegraf_repo_state }}"
+    become: yes
+    when: ansible_os_family == "Debian"
+  
+  - name: install telegraf packages
+    apt:
+      allow_unauthenticated: yes
+      name: "{{ telegraf_packages }}"
+      state: "{{ telegraf_packages_state }}"
+      update_cache: yes
+    become: yes
+    notify:
+      - restart telegraf
+  
+  - name: manage services
+    service:
+      name: "{{ item }}"
+      state: "{{ telegraf_services_state }}"
+      enabled: "{{ telegraf_services_enabled }}"
+    become: yes
+    with_items: "{{ telegraf_services }}"
+  
