@@ -1,0 +1,9 @@
+- name: configure and deploy grafana 
+  hosts: grafana
+  remote_user: pi
+
+  roles:
+    - common
+    - influxdb
+    - telegraf
+    - grafana
