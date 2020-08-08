@@ -1,0 +1,7 @@
+---
+- name: restart grafana
+  service:
+    name: "{{ item }}"
+    state: restarted
+  become: yes
+  with_items: "{{ grafana_services }}"

@@ -1,0 +1,32 @@
+---
+- name: install grafana apt key
+  apt_key:
+    keyserver: "{{ grafana_repo_key_server }}"
+    id: "{{ grafana_repo_key_id }}"
+  become: yes
+
+- name: install grafana apt repository
+  apt_repository:
+    filename: "{{ grafana_repo_name }}"
+    repo: "{{ grafana_repo_url }}"
+    state: "{{ grafana_repo_state }}"
+  become: yes
+  when: ansible_os_family == "Debian"
+
+- name: install grafana packages
+  apt:
+    allow_unauthenticated: yes
+    name: "{{ grafana_packages }}"
+    state: "{{ grafana_packages_state }}"
+    update_cache: yes
+  become: yes
+  notify:
+    - restart grafana
+
+- name: manage services
+  service:
+    name: "{{ item }}"
+    state: "{{ grafana_services_state }}"
+    enabled: "{{ grafana_services_enabled }}"
+  become: yes
+  with_items: "{{ grafana_services }}"
