@@ -1,0 +1,16 @@
+unifi.ilot
+grafana.ilot
+pihole.ilot
+tempi.ilot
+
+[unifi]
+unifi.ilot
+
+[grafana]
+grafana.ilot
+
+[pihole]
+pihole.ilot
+
+[tempi]
+tempi.ilot
