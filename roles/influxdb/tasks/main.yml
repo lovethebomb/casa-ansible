@@ -1,0 +1,33 @@
+---
+  - name: install influxdb apt key
+    apt_key:
+      keyserver: "{{ influxdb_repo_key_server }}"
+      id: "{{ influxdb_repo_key_id }}"
+    become: yes
+  
+  - name: install influxdb apt repository
+    apt_repository:
+      filename: "{{ influxdb_repo_name }}"
+      repo: "{{ influxdb_repo_url }}"
+      state: "{{ influxdb_repo_state }}"
+    become: yes
+    when: ansible_os_family == "Debian"
+  
+  - name: install influxdb packages
+    apt:
+      allow_unauthenticated: yes
+      name: "{{ influxdb_packages }}"
+      state: "{{ influxdb_packages_state }}"
+      update_cache: yes
+    become: yes
+    notify:
+      - restart influxdb
+  
+  - name: manage services
+    service:
+      name: "{{ item }}"
+      state: "{{ influxdb_services_state }}"
+      enabled: "{{ influxdb_services_enabled }}"
+    become: yes
+    with_items: "{{ influxdb_services }}"
+  

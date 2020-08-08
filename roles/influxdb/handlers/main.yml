@@ -1,0 +1,8 @@
+---
+  - name: restart influxdb
+    service:
+      name: "{{ item }}"
+      state: restarted
+    become: yes
+    with_items: "{{ influxdb_services }}"
+  
