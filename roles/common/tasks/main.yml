@@ -1,0 +1,48 @@
+- name: Set gpu_mem to 16MB in /boot/config.txt
+  become: yes
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: "^#?gpu_mem"
+    line: "gpu_mem=16"
+    insertafter: EOF
+    state: present
+
+- name: Disable tvservice
+  become: yes
+  lineinfile:
+    dest: /etc/rc.local
+    regexp: "^/usr/bin/tvservice"
+    line: "/usr/bin/tvservice -o"
+    insertbefore: "^exit"
+    state: present
+
+- name: Set low swap
+  become: yes
+  sysctl:
+    name: vm.swappiness
+    value: '10'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Mount /tmp as tmpfs
+  become: yes
+  mount:
+    src: tmpfs
+    name: /tmp
+    fstype: tmpfs
+    opts: "defaults,noatime,nosuid,nodev,size=10M"
+    dump: "0"
+    passno: "0"
+    state: mounted
+
+- name: Mount /var/log as tmpfs
+  become: yes
+  mount:
+    src: tmpfs
+    name: /var/log
+    fstype: tmpfs
+    opts: "defaults,noatime,nosuid,nodev,size=10M"
+    dump: "0"
+    passno: "0"
+    state: mounted
