@@ -6,9 +6,16 @@
   become: yes
   with_items: "{{ unifi_services }}"
 
-- name: restart mongodb
+- name: stop mongodb
+  service:
+    name: "{{ item }}"
+    state: stopped
+  become: yes
+  with_items: "{{ unifi_mongodb_services }}"
+
+- name: restart unifi-poller
   service:
     name: "{{ item }}"
     state: restarted
   become: yes
-  with_items: "{{ unifi_mongodb_services }}"
+  with_items: "{{ unifi_poller_services }}"
