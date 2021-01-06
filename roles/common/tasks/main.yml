@@ -27,22 +27,24 @@
 
 - name: Mount /tmp as tmpfs
   become: yes
+  when: fstab_tmpfs_tmp
   mount:
     src: tmpfs
     name: /tmp
     fstype: tmpfs
-    opts: "defaults,noatime,nosuid,nodev,size=10M"
+    opts: "defaults,noatime,nosuid,nodev,size=100M"
     dump: "0"
     passno: "0"
     state: mounted
 
 - name: Mount /var/log as tmpfs
   become: yes
+  when: fstab_tmpfs_logs
   mount:
     src: tmpfs
     name: /var/log
     fstype: tmpfs
-    opts: "defaults,noatime,nosuid,nodev,size=10M"
+    opts: "defaults,noatime,nosuid,nodev,size=100M"
     dump: "0"
     passno: "0"
     state: mounted

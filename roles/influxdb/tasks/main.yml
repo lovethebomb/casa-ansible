@@ -22,7 +22,7 @@
     become: yes
     notify:
       - restart influxdb
-  
+
   - name: manage services
     service:
       name: "{{ item }}"
@@ -30,4 +30,15 @@
       enabled: "{{ influxdb_services_enabled }}"
     become: yes
     with_items: "{{ influxdb_services }}"
-  
+
+  - name: update influxdb config file
+    template:
+      src: "{{ influxdb_config_tpl }}"
+      dest: "{{ influxdb_config_dest }}"
+      owner: root
+      group: root
+      mode: u=rwx,g=rwx,o=r
+
+    become: yes
+    notify:
+      - restart influxdb 

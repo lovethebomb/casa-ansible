@@ -10,3 +10,5 @@ influxdb_services:
   - influxdb
 influxdb_services_state: started
 influxdb_services_enabled: yes
+influxdb_config_tpl: "influxdb.conf.j2"
+influxdb_config_dest: "/etc/influxdb/influxdb.conf"

@@ -2,6 +2,10 @@
   hosts: grafana
   remote_user: pi
 
+  vars:
+    fstab_tmpfs_tmp: true
+    fstab_tmpfs_logs: false
+
   roles:
     - common
     - influxdb
